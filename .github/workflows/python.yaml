@@ -15,15 +15,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Display Python version
-        id: display-version
-        run: |
-          python -c "import sys; print(sys.version)"
-          echo "PYTHON_VERSION=${{ steps.display-version.outputs.stdout }}" >> $GITHUB_ENV
       - name: Save Python version to file
-        run: echo "${{ env.PYTHON_VERSION }}" > ${{ github.workspace }}/python-version.txt
+        run: echo "${{ matrix.python-version }}" > ${{ github.workspace }}/python-version-${{ matrix.python-version }}.txt
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: python-version
-          path: ${{ github.workspace }}/python-version.txt
+          name: python-versions
+          path: ${{ github.workspace }}/python-version-*.txt
