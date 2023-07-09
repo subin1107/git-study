@@ -19,9 +19,9 @@ jobs:
         id: display-version
         run: |
           python -c "import sys; print(sys.version)"
-          echo "::set-output name=python-version::$(python -c 'import sys; print(sys.version)')"
+          echo "PYTHON_VERSION=${{ steps.display-version.outputs.stdout }}" >> $GITHUB_ENV
       - name: Save Python version to file
-        run: echo "${{ steps.display-version.outputs.python-version }}" > ${{ github.workspace }}/python-version.txt
+        run: echo "${{ env.PYTHON_VERSION }}" > ${{ github.workspace }}/python-version.txt
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
