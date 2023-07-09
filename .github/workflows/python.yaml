@@ -18,11 +18,10 @@ jobs:
       - name: Display Python version
         run: python -c "import sys; print(sys.version)"
         id: display-version
+      - name: Save Python version to file
+        run: echo "${{ steps.display-version.outputs.stdout }}" > ${{ github.workspace }}/python-version.txt
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: python-version
-          path: |
-            python-version.txt
-      - name: Save Python version to file
-        run: echo "${{ steps.display-version.outputs.stdout }}" > python-version.txt
+          path: ${{ github.workspace }}/python-version.txt
